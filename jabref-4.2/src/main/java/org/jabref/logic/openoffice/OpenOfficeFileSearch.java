@@ -32,7 +32,7 @@ public class OpenOfficeFileSearch {
         return new ArrayList<>(0);
     }
 
-    private static List<Path> findOpenOfficeDirectories(List<Path> programDirectories) {
+     static List<Path> findOpenOfficeDirectories(List<Path> programDirectories) {
         List<Path> result = new ArrayList<>();
 
         for (Path programDir : programDirectories) {
@@ -48,7 +48,7 @@ public class OpenOfficeFileSearch {
         return result;
     }
 
-    private static List<Path> findWindowsOpenOfficeDirs() {
+    static List<Path> findWindowsOpenOfficeDirs() {  //antes aqui era privado 
         List<Path> sourceList = new ArrayList<>();
 
         // 64-bit program directory
@@ -66,13 +66,13 @@ public class OpenOfficeFileSearch {
         return findOpenOfficeDirectories(sourceList);
     }
 
-    private static List<Path> findOSXOpenOfficeDirs() {
+     static List<Path> findOSXOpenOfficeDirs() {//antes aqui era privado 
         List<Path> sourceList = Arrays.asList(Paths.get("/Applications"));
 
         return findOpenOfficeDirectories(sourceList);
     }
 
-    private static List<Path> findLinuxOpenOfficeDirs() {
+     static List<Path> findLinuxOpenOfficeDirs() {//antes aqui era privado 
         List<Path> sourceList = Arrays.asList(Paths.get("/usr/lib"), Paths.get("/usr/lib64"), Paths.get("/opt"));
 
         return findOpenOfficeDirectories(sourceList);
