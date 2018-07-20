@@ -13,19 +13,7 @@ public class UndefinedBibtexEntryTest {
 		UndefinedBibtexEntry k = new UndefinedBibtexEntry("key");
 		assertEquals("key", k.getKey());
 		
-		
-		
-		
-	}
+		}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 }

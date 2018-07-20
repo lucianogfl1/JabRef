@@ -15,7 +15,8 @@ class OpenOfficePreferencesTest {
 		boolean syncWhenCiting = true ;
 		boolean showPanel = true;
 		
-		OpenOfficePreferences oop = new OpenOfficePreferences("jarsPath","executablePath","installationPath",useAllDatabases,syncWhenCiting,showPanel,externalStyles,"currentStyle");
+		OpenOfficePreferences oop = new OpenOfficePreferences("jarsPath","executablePath",
+				"installationPath",useAllDatabases,syncWhenCiting,showPanel,externalStyles,"currentStyle");
 		assertEquals("executablePath", oop.getExecutablePath());
 		assertEquals("installationPath", oop.getInstallationPath());
 		assertTrue(oop.getUseAllDatabases());
@@ -24,12 +25,7 @@ class OpenOfficePreferencesTest {
 		assertEquals(null, oop.getExternalStyles());
 		assertEquals("currentStyle", oop.getCurrentStyle());
 		assertEquals("jarsPath", oop.getJarsPath());
-		
-		
-		
-		
-	}
-			
+		}
 			
 			@Test
 			public void testOpenOfficePreferencesCleanStyle() {
@@ -38,14 +34,11 @@ class OpenOfficePreferencesTest {
 			boolean syncWhenCiting = true ;
 			boolean showPanel = true;
 			
-			OpenOfficePreferences oop = new OpenOfficePreferences("jarsPath","executablePath","installationPath",useAllDatabases,syncWhenCiting,showPanel,externalStyles,"currentStyle");
+			OpenOfficePreferences oop = new OpenOfficePreferences("jarsPath","executablePath",
+					"installationPath",useAllDatabases,syncWhenCiting,showPanel,externalStyles,"currentStyle");
 			oop.clearCurrentStyle();
 			assertEquals(null, oop.getCurrentStyle());
-			
-			
-			
-			
-			
+					
 		}
 			
 			@Test
@@ -55,7 +48,8 @@ class OpenOfficePreferencesTest {
 			boolean syncWhenCiting = true ;
 			boolean showPanel = true;
 			
-			OpenOfficePreferences oop = new OpenOfficePreferences("jarsPath","executablePath","installationPath",useAllDatabases,syncWhenCiting,showPanel,externalStyles,"currentStyle");
+			OpenOfficePreferences oop = new OpenOfficePreferences("jarsPath","executablePath",
+					"installationPath",useAllDatabases,syncWhenCiting,showPanel,externalStyles,"currentStyle");
 			oop.setExecutablePath("novo");
 			assertEquals("novo", oop.getExecutablePath());
 			
@@ -67,11 +61,11 @@ class OpenOfficePreferencesTest {
 			boolean syncWhenCiting = true ;
 			boolean showPanel = true;
 			
-			OpenOfficePreferences oop = new OpenOfficePreferences("jarsPath","executablePath","installationPath",useAllDatabases,syncWhenCiting,showPanel,externalStyles,"currentStyle");
+			OpenOfficePreferences oop = new OpenOfficePreferences("jarsPath","executablePath",
+					"installationPath",useAllDatabases,syncWhenCiting,showPanel,externalStyles,"currentStyle");
 			oop.setInstallationPath("novo");
 			assertEquals("novo", oop.getInstallationPath());
-			
-			
+					
 			oop.setUseAllDatabases(false);
 			assertFalse(oop.getUseAllDatabases());
 			
@@ -94,28 +88,12 @@ class OpenOfficePreferencesTest {
 			assertEquals("novo", oop.getInstallationPath());
 			assertEquals("velho", oop.getExecutablePath());
 			assertEquals("usado", oop.getJarsPath());
-			
-			
+					
 			oop.clearConnectionSettings();
 			assertNull(oop.getInstallationPath());
 			assertNull(oop.getExecutablePath());
 			assertNull(oop.getJarsPath());
-			
-			
-			
+				
 			}
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-
+	
 }

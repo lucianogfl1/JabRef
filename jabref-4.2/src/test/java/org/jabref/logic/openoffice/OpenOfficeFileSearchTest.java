@@ -46,11 +46,5 @@ class OpenOfficeFileSearchTest {
 		assertNotNull(OpenOfficeFileSearch.findLinuxOpenOfficeDirs());
 		
 	}
-	
-	
-	
-
-	
-	
-
+		
 }

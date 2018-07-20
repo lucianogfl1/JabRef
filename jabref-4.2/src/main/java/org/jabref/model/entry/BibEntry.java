@@ -1,6 +1,7 @@
 package org.jabref.model.entry;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -14,6 +15,8 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
+
+import javax.swing.JOptionPane;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
@@ -442,6 +445,8 @@ public class BibEntry implements Cloneable {
      * @param value The value to set.
      */
     public Optional<FieldChange> setField(String name, String value) {
+    	// validate field and value - Grupo 6
+    	value = checaCampo(name, value);
         return setField(name, value, EntryEventSource.LOCAL);
     }
 
@@ -861,4 +866,51 @@ public class BibEntry implements Cloneable {
     private interface GetFieldInterface {
         Optional<String> getValueForField(String fieldName);
     }
+    
+    public String checaCampo(String fieldName, String value){
+        switch (fieldName) {
+            case "year":
+                value = validaAno(value);
+                break;
+            case "bibtexkey":
+                value = validaBibtexKey(value);
+                break; 
+        }
+        return value;
+    }
+    
+    public static String validaAno (String ano) {
+        String str = null;
+        Calendar calAuxiliar = Calendar.getInstance(); //método para instanciar a data do SO
+        int limInferior = 1900;
+        int limSuperior = calAuxiliar.get(Calendar.YEAR); //Recebe o ano atual do SO
+        int aux = Integer.parseInt(ano); //auxiliar recebera a conversão de ano (string) para int
+
+        //checa validade de data
+        if ((aux < limInferior && aux < limSuperior)){
+            JOptionPane.showMessageDialog(null, "Ano inferior ao limite. Tente Novamente!!");
+            return "";
+        }else if (aux > limInferior && aux > limSuperior){
+            JOptionPane.showMessageDialog(null, "Ano superior ao limite. Tente Novamente!!");
+            return "";
+        }
+        return ano;
+    }
+    
+    public static String validaBibtexKey(String name) {
+        if (name.length() < 2) {
+            JOptionPane.showMessageDialog(null, "Entrada inválida. Adicione mais caracteres!!");
+            return "";
+        } else if (!Character.isLetter(name.charAt(0))) {
+            JOptionPane.showMessageDialog(null, "Entrada inválida. Primeiro caracter precisa ser uma letra!!");
+            return "";
+        }
+        else
+            return name;
+    }
+
+
+
+    
+    
 }

@@ -12,21 +12,10 @@ public class UndefinedParagraphFormatExceptionTest {
 	public void testUndefinedParagraphFormatExceptionFormatName() {
 		UndefinedParagraphFormatException fn = new UndefinedParagraphFormatException("formatname");
 		assertEquals("formatname", fn.getFormatName());
-		
-		
-		
+					
 		
 		
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }

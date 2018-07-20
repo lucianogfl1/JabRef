@@ -1,14 +1,19 @@
 package org.jabref.model.entry;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.jabref.logic.importer.ImportFormatPreferences;
+import org.jabref.logic.importer.fileformat.BibtexParser;
 import org.jabref.model.database.BibDatabase;
-
+import org.jabref.preferences.JabRefPreferences;
+import org.jbibtex.ParseException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -17,10 +22,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class BibEntryTest {
 
     private BibEntry entry;
+    private ImportFormatPreferences importFormatPreferences;
+    private BibtexParser parser;
+
 
     @BeforeEach
     public void setUp() {
         entry = new BibEntry();
+        importFormatPreferences = JabRefPreferences.getInstance().getImportFormatPreferences();
+        parser = new BibtexParser(importFormatPreferences,null);
     }
 
     @AfterEach
@@ -131,5 +141,81 @@ public class BibEntryTest {
 
         assertEquals(new KeywordList(new Keyword("kw"), new Keyword("kw2"), new Keyword("kw3")), actual);
     }
+    
+    @Test
+    public void anoMaior() throws ParseException, org.jabref.logic.importer.ParseException{
+        List<BibEntry> test = parser.parseEntries("@book{, year = {2018}}");
+        BibEntry entradaValida = new BibEntry();
+        entradaValida.setType("book");
+        entradaValida.setField("year", "2017");
+        assertNotEquals(Collections.singletonList(entradaValida), test);
+    }
+
+    @Test
+    public void anoMenor() throws ParseException, org.jabref.logic.importer.ParseException{
+        List<BibEntry> test = parser.parseEntries("@book{, year = {1899}}");
+        BibEntry entradaValida = new BibEntry();
+        entradaValida.setType("book");
+        entradaValida.setField("year", "2017");
+        assertNotEquals(Collections.singletonList(entradaValida), test);
+    }
+
+    @Test
+    public void anoInferior() throws ParseException, org.jabref.logic.importer.ParseException{
+        List<BibEntry> test = parser.parseEntries("@book{, year = {1900}}");
+        BibEntry entradaValida = new BibEntry();
+        entradaValida.setType("book");
+        entradaValida.setField("year", "1900");
+        assertEquals(Collections.singletonList(entradaValida), test);
+    }
+
+    @Test
+    public void anoSuperior()  throws ParseException, org.jabref.logic.importer.ParseException{
+        List<BibEntry> test = parser.parseEntries("@book{, year = {2017}}");
+        BibEntry entradaValida = new BibEntry();
+        entradaValida.setType("book");
+        entradaValida.setField("year", "2016");
+        assertNotEquals(Collections.singletonList(entradaValida), test);
+    }
+    
+    @Test
+    public void bitTexKey1() throws ParseException, org.jabref.logic.importer.ParseException{
+        List<BibEntry> test = parser.parseEntries("@book{a}");
+        BibEntry entradaValida = new BibEntry();
+        entradaValida.setType("book");
+        entradaValida.setCiteKey("a");
+        assertEquals(Collections.singletonList(entradaValida), test);
+    }
+
+    @Test
+    public void bitTexKeyNaoLetraInicio() throws ParseException, org.jabref.logic.importer.ParseException{
+        List<BibEntry> test = parser.parseEntries("@book{0AAA}");
+        BibEntry entradaValida = new BibEntry();
+        entradaValida.setType("book");
+        entradaValida.setCiteKey("0AAA");
+        assertEquals(Collections.singletonList(entradaValida), test);
+    }
+
+    @Test
+    public void bitTexKeyUmCaracter() throws ParseException, org.jabref.logic.importer.ParseException{
+        List<BibEntry> test = parser.parseEntries("@book{A}");
+    	
+        BibEntry entradaValida = new BibEntry();
+        entradaValida.setType("book");
+        entradaValida.setCiteKey("A");
+        assertEquals(Collections.singletonList(entradaValida), test);
+    }
+
+
+    @Test
+    public void bitTexKey1Correta() throws ParseException, org.jabref.logic.importer.ParseException{
+        List<BibEntry> test = parser.parseEntries("@book{Aaa111}");
+        BibEntry entradaValida = new BibEntry();
+        entradaValida.setType("book");
+        entradaValida.setCiteKey("Aaa111");
+        assertEquals(Collections.singletonList(entradaValida), test);
+    }
+
+
 
 }
